@@ -14,7 +14,7 @@ const Home = () => {
 
   const fetchUserDetails = useCallback(async () => {
     try {
-      const URL = `${process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/user-details`;
+      const URL = `${process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/user-details`;
       const response = await axios({
         url: URL,
         withCredentials: true

@@ -52,7 +52,7 @@ console.log(uploadPhoto);
     e.preventDefault()
     e.stopPropagation()
 
-    const URL = `${process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/register`
+    const URL = `${process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/register`
 
     try {
         const response = await axios.post(URL,data)
