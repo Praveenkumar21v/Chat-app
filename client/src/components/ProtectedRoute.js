@@ -5,7 +5,11 @@ import { useSelector } from 'react-redux';
 const ProtectedRoute = ({ children }) => {
   const token = useSelector((state) => state.user.token);
 
-  return token ? children : <Navigate to="/email" />;
+  if (!token) {
+    return <Navigate to="/email" />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

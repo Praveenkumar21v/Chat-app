@@ -23,31 +23,22 @@ const CheckPasswordPage = () => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-
-    setData((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    e.stopPropagation();
 
     const URL = `${process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/password`;
 
     try {
-      const response = await axios({
-        method: "post",
-        url: URL,
-        data: {
-          userId: location?.state?._id,
-          password: data.password,
-        },
-        withCredentials: true,
-      });
+      const response = await axios.post(URL, {
+        userId: location?.state?._id,
+        password: data.password,
+      }, { withCredentials: true });
 
       toast.success(response.data.message);
 
@@ -55,10 +46,8 @@ const CheckPasswordPage = () => {
         dispatch(setToken(response?.data?.token));
         localStorage.setItem("token", response?.data?.token);
 
-        setData({
-          password: "",
-        });
-        navigate("/"); 
+        setData({ password: "" });
+        navigate("/");
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -67,17 +56,10 @@ const CheckPasswordPage = () => {
 
   return (
     <div className="mt-5">
-      <div className="bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto">
+      <div className="bg-white w-full max-w-md rounded overflow-hidden p-4 mx-auto">
         <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
-          <Avatar
-            width={70}
-            height={70}
-            name={location?.state?.name}
-            imageUrl={location?.state?.profile_pic}
-          />
-          <h2 className="font-semibold text-lg mt-1">
-            {location?.state?.name}
-          </h2>
+          <Avatar width={70} height={70} name={location?.state?.name} imageUrl={location?.state?.profile_pic} />
+          <h2 className="font-semibold text-lg mt-1">{location?.state?.name}</h2>
         </div>
 
         <form className="grid gap-4 mt-3" onSubmit={handleSubmit}>
@@ -95,17 +77,15 @@ const CheckPasswordPage = () => {
             />
           </div>
 
-          <button className="bg-primary text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide">
-            Login
+          <button className="bg-primary text-lg px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide">
+            Log In
           </button>
         </form>
 
         <p className="my-3 text-center">
-          <Link
-            to={"/forgot-password"}
-            className="hover:text-primary font-semibold"
-          >
-            Forgot password ?
+          New User?{" "}
+          <Link to={"/register"} className="hover:text-primary font-semibold">
+            Register
           </Link>
         </p>
       </div>

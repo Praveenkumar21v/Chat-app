@@ -7,7 +7,7 @@ import Home from "../pages/Home";
 import MessagePage from "../components/MessagePage";
 import AuthLayouts from "../layout";
 import Forgotpassword from "../pages/Forgotpassword";
-import ProtectedRoute from "../components/ProtectedRoute"; 
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,6 @@ const router = createBrowserRouter([
         path: 'forgot-password',
         element: <AuthLayouts><Forgotpassword /></AuthLayouts>,
       },
-      
       {
         path: "",
         element: (
