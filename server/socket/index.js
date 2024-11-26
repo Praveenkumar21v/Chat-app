@@ -14,13 +14,28 @@ const allowedOrigins = [
     'https://chat-app-dun-gamma.vercel.app'
 ];
 
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+}));
+
+app.options('*', cors());
+
 const io = new Server(server, {
     cors: {
         origin: allowedOrigins,
-        methods: ["GET", "POST"],
+        methods: ['GET', 'POST'],
         credentials: true
     }
 });
+
 
 const onlineUser = new Set();
 
