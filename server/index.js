@@ -8,10 +8,7 @@ const { app, server } = require('./socket/index')
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://chat-app-dun-gamma.vercel.app/',
-    'https://chat-app-praveen-kumars-projects-7825b76b.vercel.app/',
-    'https://chat-app-git-main-praveen-kumars-projects-7825b76b.vercel.app/',
-    'https://chat-qqdwi6hk8-praveen-kumars-projects-7825b76b.vercel.app/',
+    'https://chat-app-dun-gamma.vercel.app'
 ];
 
 
