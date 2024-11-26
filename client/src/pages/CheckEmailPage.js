@@ -31,12 +31,17 @@ const CheckEmailPage = () => {
 
       if (response.data.success) {
         setData({ email: "" });
-        navigate("/password", { state: response?.data?.data });
+        if (response.data.data && response.data.data.name && response.data.data._id) {
+          navigate("/password", { state: response.data.data });
+        } else {
+          toast.error("User  data is missing. Please try again.");
+        }
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || "An error occurred.");
     }
   };
+
 
   return (
     <div className="mt-5">
