@@ -13,39 +13,43 @@ const CheckEmailPage = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setData((preve) => {
+      return {
+        ...preve,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
 
     const URL = `${process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/email`;
 
     try {
       const response = await axios.post(URL, data);
 
+      console.log("Success:", response.data.message);
       toast.success(response.data.message);
 
       if (response.data.success) {
-        setData({ email: "" });
-        if (response.data.data && response.data.data.name && response.data.data._id) {
-          navigate("/password", { state: response.data.data });
-        } else {
-          toast.error("User  data is missing. Please try again.");
-        }
+        setData({
+          email: "",
+        });
+        navigate("/password", {
+          state: response?.data?.data,
+        });
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "An error occurred.");
+      console.error("Error:", error?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
     }
   };
 
-
   return (
     <div className="mt-5">
-      <div className="bg-white w-full max-w-md rounded overflow-hidden p-4 mx-auto">
+      <div className="bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto">
         <div className="w-fit mx-auto mb-2">
           <PiUserCircle size={80} />
         </div>
@@ -67,13 +71,13 @@ const CheckEmailPage = () => {
             />
           </div>
 
-          <button className="bg-primary text-lg px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide">
+          <button className="bg-primary text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide">
             Let's Go
           </button>
         </form>
 
         <p className="my-3 text-center">
-          New User?{" "}
+          New User ?{" "}
           <Link to={"/register"} className="hover:text-primary font-semibold">
             Register
           </Link>
