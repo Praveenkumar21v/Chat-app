@@ -20,39 +20,49 @@ const Home = () => {
         withCredentials: true
       });
 
-      dispatch(setUser(response.data.data));
-
       if (response.data.data.logout) {
         dispatch(logout());
-        navigate("/email");
+        navigate("/email"); // Redirect to email verification if the user is logged out
+        return;
       }
+
+      dispatch(setUser(response.data.data));
     } catch (error) {
       console.error("Error fetching user details:", error);
+      navigate("/email"); // If error occurs, send user back to email verification
     }
-  }, [dispatch, navigate]); 
+  }, [dispatch, navigate]);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // If token is missing, redirect to email verification page
+      navigate("/email");
+      return;
+    }
+
     fetchUserDetails();
-  }, [fetchUserDetails]);
+  }, [fetchUserDetails, navigate]);
 
   useEffect(() => {
-    const socketConnection = io(process.env.REACT_APP_PRODUCTION_BACKEND_URL, {
-      auth: {
-        token: localStorage.getItem('token')
-      }
-    });
-    dispatch(setSocketConnection(socketConnection));
+    const token = localStorage.getItem('token');
+    if (token) {
+      const socketConnection = io(process.env.REACT_APP_PRODUCTION_BACKEND_URL, {
+        auth: { token }
+      });
 
-    socketConnection.on('onlineUser', (data) => {
-      dispatch(setOnlineUser(data));
-    });
-    
-    return () => {
-      socketConnection.disconnect();
-      dispatch(setSocketConnection(""));
+      dispatch(setSocketConnection(socketConnection));
 
-    };
-  }, [dispatch]); 
+      socketConnection.on('onlineUser', (data) => {
+        dispatch(setOnlineUser(data));
+      });
+
+      return () => {
+        socketConnection.disconnect();
+        dispatch(setSocketConnection(null));
+      };
+    }
+  }, [dispatch]);
 
   const basePath = location.pathname === '/';
   return (

@@ -8,6 +8,8 @@ const getConversation = require('../helpers/getConversation');
 
 const app = express();
 const server = http.createServer(app);
+const cors = require('cors');
+
 
 const allowedOrigins = [
     'http://localhost:3000',
