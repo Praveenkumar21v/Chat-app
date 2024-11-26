@@ -7,11 +7,11 @@ const cookiesParser = require('cookie-parser')
 const { app, server } = require('./socket/index')
 
 const allowedOrigins = [
-    'https://chat-app-sage-tau-14.vercel.app',
-    'https://chat-app-praveen-kumars-projects-7825b76b.vercel.app/email',
-    'https://chat-app-git-main-praveen-kumars-projects-7825b76b.vercel.app',
-    'https://chat-kdtiiaexp-praveen-kumars-projects-7825b76b.vercel.app',
     'http://localhost:3000',
+    'https://chat-app-dun-gamma.vercel.app/',
+    'https://chat-app-praveen-kumars-projects-7825b76b.vercel.app/',
+    'https://chat-app-git-main-praveen-kumars-projects-7825b76b.vercel.app/',
+    'https://chat-qqdwi6hk8-praveen-kumars-projects-7825b76b.vercel.app/',
 ];
 
 
