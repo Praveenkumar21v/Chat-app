@@ -8,7 +8,7 @@ const { app, server } = require('./socket/index')
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'chat-app-kahv.vercel.app'
+    'https://chat-app-kahv.vercel.app'
 ];
 
 
