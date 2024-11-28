@@ -13,7 +13,7 @@ const cors = require('cors');
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://chat-app-kahv.vercel.app/'
+    'https://chat-app-kahv.vercel.app'
 ];
 
 app.use(cors({
