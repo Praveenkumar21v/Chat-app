@@ -15,7 +15,7 @@ const ForgotPasswordPage = () => {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
-    const URL = `${process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/forgot-password/generate-otp`;
+    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/forgot-password/generate-otp`;
 
     try {
       const response = await axios.post(URL, { email });
