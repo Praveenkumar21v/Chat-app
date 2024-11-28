@@ -15,7 +15,7 @@ const ForgotPasswordPage = () => {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
-    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/forgot-password/generate-otp`;
+    const URL = `https://chat-app-sigma-dun.vercel.app/api/forgot-password/generate-otp`;
 
     try {
       const response = await axios.post(URL, { email });
@@ -45,7 +45,7 @@ const ForgotPasswordPage = () => {
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
     const otpString = otp.join(''); 
-    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/forgot-password/verify-otp`;
+    const URL = `https://chat-app-sigma-dun.vercel.app/api/forgot-password/verify-otp`;
 
     try {
       const response = await axios.post(URL, { email, otp: otpString });
@@ -65,7 +65,7 @@ const ForgotPasswordPage = () => {
       return; 
     }
 
-    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/forgot-password/update-password`;
+    const URL = `https://chat-app-sigma-dun.vercel.app/api/forgot-password/update-password`;
 
     try {
       const response = await axios.post(URL, { email, newPassword });

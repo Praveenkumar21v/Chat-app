@@ -52,7 +52,7 @@ console.log(uploadPhoto);
     e.preventDefault()
     e.stopPropagation()
 
-    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/register`
+    const URL = `https://chat-app-sigma-dun.vercel.app/api/register`
 
     try {
         const response = await axios.post(URL,data)

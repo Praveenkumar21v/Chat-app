@@ -25,7 +25,7 @@ const CheckEmailPage = () => {
     e.preventDefault()
     e.stopPropagation()
 
-    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/email`
+    const URL = `https://chat-app-sigma-dun.vercel.app/api/email`
 
     try {
         const response = await axios.post(URL,data)

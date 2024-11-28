@@ -14,7 +14,7 @@ const Home = () => {
 
   const fetchUserDetails = useCallback(async () => {
     try {
-      const URL = `${process.env.REACT_APP_BACKEND_URL}/api/user-details`;
+      const URL = `https://chat-app-sigma-dun.vercel.app/api/user-details`;
       const response = await axios({
         url: URL,
         withCredentials: true
@@ -36,7 +36,7 @@ const Home = () => {
   }, [fetchUserDetails]);
 
   useEffect(() => {
-    const socketConnection = io(process.env.REACT_APP_BACKEND_URL, {
+    const socketConnection = io('https://chat-app-sigma-dun.vercel.app', {
       auth: {
         token: localStorage.getItem('token')
       }
