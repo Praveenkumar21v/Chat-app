@@ -14,54 +14,45 @@ const Home = () => {
 
   const fetchUserDetails = useCallback(async () => {
     try {
-      const URL = `${process.env.REACT_APP_PRODUCTION_BACKEND_URL}/api/user-details`;
+      const URL = `${process.env.REACT_APP_BACKEND_URL}/api/user-details`;
       const response = await axios({
         url: URL,
         withCredentials: true
       });
 
+      dispatch(setUser(response.data.data));
+
       if (response.data.data.logout) {
         dispatch(logout());
-        navigate("/email"); 
-        return;
+        navigate("/email");
       }
-
-      dispatch(setUser(response.data.data));
     } catch (error) {
       console.error("Error fetching user details:", error);
-      navigate("/email"); 
     }
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate]); 
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate("/email");
-      return;
-    }
-
     fetchUserDetails();
-  }, [fetchUserDetails, navigate]);
+  }, [fetchUserDetails]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const socketConnection = io(process.env.REACT_APP_PRODUCTION_BACKEND_URL, {
-        auth: { token }
-      });
+    const socketConnection = io(process.env.REACT_APP_BACKEND_URL, {
+      auth: {
+        token: localStorage.getItem('token')
+      }
+    });
+    dispatch(setSocketConnection(socketConnection));
 
-      dispatch(setSocketConnection(socketConnection));
+    socketConnection.on('onlineUser', (data) => {
+      dispatch(setOnlineUser(data));
+    });
+    
+    return () => {
+      socketConnection.disconnect();
+      dispatch(setSocketConnection(""));
 
-      socketConnection.on('onlineUser', (data) => {
-        dispatch(setOnlineUser(data));
-      });
-
-      return () => {
-        socketConnection.disconnect();
-        dispatch(setSocketConnection(null));
-      };
-    }
-  }, [dispatch]);
+    };
+  }, [dispatch]); 
 
   const basePath = location.pathname === '/';
   return (
