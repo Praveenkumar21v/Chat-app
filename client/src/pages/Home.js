@@ -22,21 +22,20 @@ const Home = () => {
 
       if (response.data.data.logout) {
         dispatch(logout());
-        navigate("/email"); // Redirect to email verification if the user is logged out
+        navigate("/email"); 
         return;
       }
 
       dispatch(setUser(response.data.data));
     } catch (error) {
       console.error("Error fetching user details:", error);
-      navigate("/email"); // If error occurs, send user back to email verification
+      navigate("/email"); 
     }
   }, [dispatch, navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      // If token is missing, redirect to email verification page
       navigate("/email");
       return;
     }
